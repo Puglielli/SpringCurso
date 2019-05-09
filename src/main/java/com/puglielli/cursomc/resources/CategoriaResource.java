@@ -1,5 +1,7 @@
 	package com.puglielli.cursomc.resources;
 
+import static org.springframework.beans.BeanUtils.copyProperties;
+
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.puglielli.cursomc.domain.Categoria;
 import com.puglielli.cursomc.dto.CategoriaDTO;
+import com.puglielli.cursomc.dto.projection.CategoriaProjection;
 import com.puglielli.cursomc.services.CategoriaService;
 
 @RestController
@@ -28,15 +32,20 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
+	@Autowired
+	private ProjectionFactory projectionFactory;
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+	public ResponseEntity<CategoriaProjection> find(@PathVariable Integer id) {
 		Categoria obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok(projectionFactory.createProjection(CategoriaProjection.class, obj));
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
-		Categoria obj = service.fromDTO(objDto);
+		Categoria obj = new Categoria();
+		copyProperties(objDto, obj);
+//		Categoria obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
