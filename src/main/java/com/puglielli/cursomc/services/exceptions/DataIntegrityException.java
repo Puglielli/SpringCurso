@@ -1,4 +1,4 @@
-package com.puglielli.cursomc.exceptions;
+package com.puglielli.cursomc.services.exceptions;
 
 public class DataIntegrityException extends RuntimeException{
 	

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.puglielli.cursomc.domain.Categoria;
 import com.puglielli.cursomc.domain.Produto;
-import com.puglielli.cursomc.exceptions.ObjectNotFoundException;
 import com.puglielli.cursomc.repositories.CategoriaRepository;
 import com.puglielli.cursomc.repositories.ProdutoRepository;
+import com.puglielli.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {

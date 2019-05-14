@@ -11,10 +11,10 @@ import com.puglielli.cursomc.domain.ItemPedido;
 import com.puglielli.cursomc.domain.PagamentoComBoleto;
 import com.puglielli.cursomc.domain.Pedido;
 import com.puglielli.cursomc.domain.enums.EstadoPagamento;
-import com.puglielli.cursomc.exceptions.ObjectNotFoundException;
 import com.puglielli.cursomc.repositories.ItemPedidoRepository;
 import com.puglielli.cursomc.repositories.PagamentoRepository;
 import com.puglielli.cursomc.repositories.PedidoRepository;
+import com.puglielli.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class PedidoService {
